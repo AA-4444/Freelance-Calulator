@@ -1,0 +1,466 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lora", serif;
+    background-color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    width: 100%;
+    height: 80px;
+    background-color: white; /* White background */
+    color: #333; /* Dark text color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.topbar.scrolled {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Shadow effect for scrolling */
+}
+
+/* .menu-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+} */
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.line {
+    fill: none;
+    stroke: black;
+    stroke-width: 6;
+    transition:
+        stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line1,
+.line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+}
+
+.line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+}
+
+.opened .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+}
+
+.opened .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+}
+
+.opened .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+}
+
+.login-btn button {
+    background: none;
+    color: #333; /* Dark text color */
+    border: none;
+    padding: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none; /* Remove any underline */
+    font-family: inherit; /* Inherit font styling from body */
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease; /* Smooth transition */
+    transform-origin: center; /* Scale from the center */
+}
+
+.login-btn button:hover {
+    transform: scale(1.2); /* Slightly increase size */
+    color: #000; /* Optional: Slightly darken the color on hover */
+}
+
+.sidebar {
+    position: fixed;
+    top: 80px; /* Avoid overlap with the top bar */
+    left: -200px; /* Hidden by default */
+    width: 200px;
+    height: calc(100% - 80px); /* Fill remaining height */
+    background-color: white; /* Sidebar background */
+    color: #333; /* Dark text color */
+    padding: 20px;
+    transition: left 0.3s ease; /* Smooth transition for sidebar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional sidebar shadow */
+    z-index: 9; /* Ensure sidebar is below the top bar */
+}
+
+.sidebar.show-sidebar {
+    left: 0; /* Show sidebar */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 10px 0;
+}
+
+.sidebar a {
+    color: black; /* Updated link color */
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    margin-top: 80px; /* Adjust for the height of the top bar */
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.Phase-Notes-Text {
+    margin-top: 1%;
+}
+.Task-Type-Text {
+    margin-top: 1%;
+}
+.select-tasktype {
+    margin-bottom: 1%;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.result,
+#savedNotes {
+    margin-top: 2rem;
+
+    border-top: 1px solid #ddd;
+}
+
+#costBreakdown {
+    color: #555;
+}
+
+#totalCost {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+}
+#projectSelector {
+    padding: 10px; /* Add padding for a taller appearance */
+    font-size: 1rem;
+    border: 2px solid black; /* Black border with slightly thicker width */
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    width: 100%; /* Full width if desired */
+    max-width: 200px; /* Control the max width */
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+    height: 40px; /* Increase the height for a larger look */
+}
+
+#projectSelector:hover {
+    border-color: #444; /* Darken border color on hover */
+    background-color: #ececec; /* Slightly darker background on hover */
+}
+
+#projectSelector:focus {
+    outline: none;
+    border-color: #007acc; /* Highlight border on focus */
+    background-color: #fff; /* Lighter background on focus */
+}
+/* Common styling for all select elements */
+.custom-select {
+    padding: 10px; /* Add padding for a taller appearance */
+    font-size: 1rem;
+    border: 2px solid black; /* Black border with slightly thicker width */
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    width: 100%; /* Full width if desired */
+    max-width: 200px; /* Control the max width */
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+    height: 40px; /* Increase the height for a larger look */
+}
+
+.custom-select:hover {
+    border-color: #444; /* Darken border color on hover */
+    background-color: #ececec; /* Slightly darker background on hover */
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #007acc; /* Highlight border on focus */
+    background-color: #fff; /* Lighter background on focus */
+}
+
+.select-tasktype {
+    font-size: 1rem;
+    border: 2px solid black; /* Black border with slightly thicker width */
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    width: 100%; /* Full width if desired */
+    max-width: 200px; /* Control the max width */
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+    height: 40px; /* Increase the height for a larger look */
+}
+
+.select-tasktype:hover {
+    border-color: #444; /* Darken border color on hover */
+    background-color: #ececec; /* Slightly darker background on hover */
+}
+
+.select-tasktype:focus {
+    outline: none;
+    border-color: #007acc; /* Highlight border on focus */
+    background-color: #fff; /* Lighter background on focus */
+}
+/* Container styling to stack elements vertically */
+#manageProjects div {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+    gap: 10px; /* Optional: Add space between elements */
+    margin-top: 10px; /* Optional: Space from the top */
+}
+.buttons-container {
+    display: flex;
+    align-items: center; /* Center align the buttons vertically */
+    position: absolute; /* Use absolute positioning for flexibility */
+    bottom: 20px; /* Distance from the bottom of the sidebar */
+    left: 5px; /* Optional: Add some left margin */
+}
+
+.sidebar button {
+    background: transparent; /* Ensure no background color */
+    border: none; /* No border */
+    appearance: none; /* Remove default button styles */
+    cursor: pointer; /* Pointer cursor on hover */
+    color: #333; /* Icon color */
+    font-size: 24px; /* Icon size */
+    display: flex;
+    align-items: center; /* Center icon in button */
+    justify-content: center; /* Center icon in button */
+}
+.toggle-button {
+    background: transparent; /* Ensure no background color */
+    border: none; /* No border */
+    appearance: none; /* Remove default button styles */
+    cursor: pointer; /* Pointer cursor on hover */
+    color: #333; /* Icon color */
+    font-size: 24px; /* Icon size */
+    display: flex;
+    align-items: center; /* Center icon in button */
+    justify-content: center; /* Center icon in button */
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center; /* Center the toggle button vertically */
+}
+
+.sun-icon,
+.crescent-icon {
+    position: absolute; /* Keep icons in place */
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease; /* Transition effects */
+}
+
+/* Initially show sun icon */
+.crescent-icon {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.dark-mode .sun-icon {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.dark-mode .crescent-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.dark-mode {
+    background-color: #121212; /* Dark mode background */
+    color: white; /* Dark mode text color */
+}
+
+/* Settings Panel Styles */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%; /* Takes 70% of the screen width */
+    height: 100%;
+    background-color: #ffffff; /* White background */
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5); /* Shadow on the right side */
+    transform: translateX(-100%); /* Hidden off-screen initially */
+    transition: transform 0.3s ease; /* Slide-in effect */
+    z-index: 1000; /* Ensure it's on top */
+    padding: 20px; /* Padding inside the panel */
+    overflow-y: auto; /* Scroll if content overflows */
+}
+
+/* Open settings panel by sliding in */
+.settings-panel.open {
+    transform: translateX(0); /* Slide in from the left */
+}
+
+/* Close button inside settings panel */
+.settings-panel .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 45px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    transition:
+        transform 0.2s ease,
+        font-weight 0.2s ease;
+}
+
+/* Hover effect for close button */
+.settings-panel .close-btn:hover {
+    transform: scale(1.2); /* Scale up slightly */
+    font-weight: bold; /* Make text bolder */
+}
+/* Modal Background and Content */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5); /* Dark background with transparency */
+    backdrop-filter: blur(8px); /* Blur effect for background */
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.toggle-text {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.toggle-text button {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
